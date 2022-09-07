@@ -22,24 +22,24 @@ function convertToStringChoice(choice) {
     return plays[choice];
 }
 
+/**
+ * Determines the winner of a rock-paper-scissors game using binary
+ * @param {number} Player1 The first player
+ * @param {number} Player2 The second player
+ * @return {number} The winner of the game
+ * 
+ * Interpretation
+ * 0 or 0b00: Draw
+ * 1 or 0b01: Player 2 wins
+ * 2 or 0b10: Player 1 wins
+**/
 function determineWinner(Player1, Player2) {
-    // This next bit will look booky
-    // Remember that 0 = Rock, 1 = Paper, 2 = Scissors
-    // We can encode another set of binary results as follows:
-    // 0 = Draw, 1 = Player2 wins, 2 = Player1 wins (convert to binary and it just makes sense)
-    // Now, I noticed that the XOR works well enough when one guy is fixed as Rock
-    // So the remaining booky bit is converting the second guy to relatively match Rock.
-    // Example: Scissors VS Paper = 2 VS 1
-    // Shift both down by 2 = 0 VS -1
-    // Take remainder mod 3 = 0 VS 2 = Rock VS Scissors
-    // Take the XOR = 00 ^ 10 = 10 = Player1 wins
-    // Applies for the remainder case and the original case
     return 0 ^ (3+Player2-Player1) % 3;
 }
 
 function playRound(playerSelection, computer) {
     player = convertToBinaryChoice(playerSelection.toLowerCase());
-    switch (0 ^ (computer - player + 3) % 3) {
+    switch (determineWinner(player, computer)) {
         case 0:
             return `Draw: We are both ${convertToStringChoice(player)}`;
         case 1:
