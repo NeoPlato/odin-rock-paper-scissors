@@ -1,13 +1,49 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Segoe UI;
+}
+
+.game-title {
+    font-size: 48px;
+}
+
 .container {
     display: flex;
     justify-content: center;
+    gap: 100px;
     align-items: center;
-    height: 100px;
-    }
-button {
+    width: 100%;
+}
+
+.select {
     display: flex;
-    font-family: 'Segoe UI', sans-serif;
-    padding: 10px;
-    font-size: 32px;
-    border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.select img {
+    width: 150px;
+    height: auto;
+    border: 2px solid black;
+    border-radius: 15px;
+    background-color: #ebcb75
+}
+
+.game-area {
+    display: flex;
+    gap: 40px;
+}
+
+.game-area div {
+    width: 150px;
+    height: 170px;
+    border: 3px solid palevioletred;
+    border-radius: 15px;
+}
+
+.game-area div img {
+    width: inherit;
 }
