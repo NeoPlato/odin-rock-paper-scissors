@@ -5,16 +5,20 @@ body {
     font-family: Segoe UI;
 }
 
+.hide-me {
+    display: none;
+}
+
 .game-title {
     font-size: 48px;
 }
 
 .container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 100px;
     align-items: center;
-    width: 100%;
+    width: 80%;
 }
 
 .select {
@@ -25,7 +29,7 @@ body {
 }
 
 .select img {
-    width: 150px;
+    width: 125px;
     height: auto;
     border: 2px solid black;
     border-radius: 15px;
@@ -34,16 +38,47 @@ body {
 
 .game-area {
     display: flex;
-    gap: 40px;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 36px;
+    font-size: 36px;
 }
 
-.game-area div {
+.img-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    align-items: center;
+}
+
+.img-container img {
     width: 150px;
-    height: 170px;
+    height: auto;
     border: 3px solid palevioletred;
     border-radius: 15px;
 }
 
-.game-area div img {
-    width: inherit;
+.game-area .game-info {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.reset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reset p {
+    text-align: center;
+}
+
+.reset button {
+    padding: 8px;
+    font-size: 36px;
+    background-color: blue;
+    border: 2px solid pink;
+    border-radius: 16px;
 }

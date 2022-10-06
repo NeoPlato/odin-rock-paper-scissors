@@ -8,22 +8,25 @@
     <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
-    <div class="game-title">Rock Paper Scissors
-    </div>
+    <div class="game-title">Rock Paper Scissors</div>
     <div class="container">
-      <div class="select">
+      <div id="player" class="select">
         <div class="choices">You</div>
-        <img src="./img/rock.png">
-        <img src="./img/paper.png">
-        <img src="./img/scissors.png">
+        <img id="rock" src="./img/rock.png">
+        <img id="paper" src="./img/paper.png">
+        <img id="scissors" src="./img/scissors.png">
       </div>
       <div class="game-area">
-        <div class="player">
-          <img src="./img/rock.png">
+        <div class="img-container"></div>
+        <div class="game-info"></div>
+        <div class="score hide-me">
+          <span id="player">0</span>
+          <span id="hyphen">-</span>
+          <span id="comp">0</span>
         </div>
-        <div class="computer"></div>
+        <div class="reset"></div>
       </div>
-      <div class="select">
+      <div id="computer" class="select">
         <div class="choices">Computer</div>
         <img src="./img/rock.png">
         <img src="./img/paper.png">
