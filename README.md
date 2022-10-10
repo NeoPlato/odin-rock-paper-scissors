@@ -3,11 +3,11 @@ A simple game of rock-paper-scissors, prescribed by [the Odin Project](https://w
 
 ### CONTENT
 
-The game itself as a console application. [Check it out here.](https://neoplato.github.io/rock-paper-scissors)
+The game itself with UI cause that's what matters. [Check it out here.](https://neoplato.github.io/rock-paper-scissors)
 
 ### Skill level
 
 *    [x]  Create the console game.
 *    [x]  Add a GUI for the game.
-*    [ ]  Add _good_ UI
+*    [ ]  Add _good_ UI lol
 
