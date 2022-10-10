@@ -19,11 +19,7 @@
       <div class="game-area">
         <div class="img-container"></div>
         <div class="game-info"></div>
-        <div class="score hide-me">
-          <span id="player">0</span>
-          <span id="hyphen">-</span>
-          <span id="comp">0</span>
-        </div>
+        <div class="score"></div>
         <div class="reset"></div>
       </div>
       <div id="computer" class="select">
@@ -34,5 +30,17 @@
       </div>
     </div>
     <script src="script.js"></script>
+    <script>
+      document.querySelectorAll("div#player.select img").forEach(
+        choice => {
+          choice.addEventListener(
+            "click",
+            startGame,
+            {once: true}
+          );
+          choice.addEventListener("click", gameClick);
+        }
+      );
+    </script>
   </body>
 </html>

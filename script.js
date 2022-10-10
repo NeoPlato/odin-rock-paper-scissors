@@ -2,8 +2,6 @@ info = document.querySelector(".game-area .game-info");
 imgContainer = document.querySelector(".game-area .img-container");
 gameArea = document.querySelector(".game-area");
 scoreArea = document.querySelector("div.score");
-playerWins = document.querySelector("div.score span#player");
-compWins = document.querySelector("div.score span#comp");
 reset = document.querySelector(".game-area .reset");
 
 function getComputerChoice() {
@@ -45,21 +43,6 @@ function determineWinner(Player1, Player2) {
     return (3+Player2-Player1) % 3;
 }
 
-function playRound(playerBinary, computerBinary) {
-    switch (determineWinner(playerBinary, computerBinary)) {
-        case 0b00:
-            return `Draw: We are both ${convertToStringChoice(playerBinary)}`;
-        case 0b01:
-            return `Lose: ${convertToStringChoice(computerBinary)} beats your ${convertToStringChoice(playerBinary)}`;
-        case 0b10:
-            return `Win: your ${convertToStringChoice(playerBinary)} beats ${convertToStringChoice(computerBinary)}`;
-    }
-}
-
-// function refreshGame() {
-//     gameArea.textContent = "";
-// }
-
 function startGame() {
     const spans = [
         ["player", "0"],
@@ -71,67 +54,103 @@ function startGame() {
         elem.id = span[0];
         elem.innerText = span[1];
         scoreArea.appendChild(elem);
-    })
+    });
+
+    const images = ["player", "comp"]
+    images.forEach(img => {
+        let elem = document.createElement("img");
+        elem.id = img;
+        imgContainer.appendChild(elem);
+    });
+
+    document.querySelectorAll("div#player.select img").forEach(
+        choice => choice.removeEventListener("click", startGame)
+    );
 }
 
-function gameClick() {
-    playerWins.parentNode.classList.remove("hide-me");
-    images = document.querySelectorAll(".img-container img");
-    images.forEach(img => imgContainer.removeChild(img));
+function resetImage(person, choice) {
+    img = document.querySelector(`div.img-container img#${person}`);
+    img.src = `./img/${choice.toLowerCase()}.png`;
+}
 
-    player = this.id;
-    playerBinary = convertToBinaryChoice(player);
+function playRound(player) {
+    let info = "";
+    const playerBinary = convertToBinaryChoice(player);
+    const compBinary = getComputerChoice();
+    const result = determineWinner(playerBinary, compBinary);
 
-    compBinary = getComputerChoice();
-    computer = convertToStringChoice(compBinary).toLowerCase();
-
-    info.innerText = playRound(playerBinary, compBinary);
-    playerImage = document.createElement("img");
-    compImage = document.createElement("img");
-    playerImage.src = `./img/${player}.png`;
-    compImage.src = `./img/${computer}.png`;
-    imgContainer.appendChild(playerImage);
-    imgContainer.appendChild(compImage);
-
-    switch (determineWinner(playerBinary, compBinary)) {
-        case 0b10:
-            playerWins.innerText = (+playerWins.innerText+1).toString();
+    player = convertToStringChoice(playerBinary);
+    comp = convertToStringChoice(compBinary);
+    
+    switch (result) {
+        case 0b00:
+            info = `Draw: We are both ${player}`;
             break;
         case 0b01:
-            compWins.innerText = (+compWins.innerText+1).toString();
+            info = `Lose: ${comp} beats your ${player}`;
+            winner = document.querySelector(".game-area div.score span#comp");
+            winner.innerText = (+winner.innerText+1).toString();
+            break;
+        case 0b10:
+            info = `Win: your ${player} beats ${comp}`;
+            winner = document.querySelector(".game-area div.score span#player");
+            winner.innerText = (+winner.innerText+1).toString();
             break;
     }
 
-    playerCount = +playerWins.innerText;
-    compCount = +compWins.innerText;
+    gameInfo = document.querySelector(".game-area .game-info");
+    gameInfo.innerText = info;
 
-    if (Math.max(playerCount, compCount) !== 5) return;
-
-    // gameArea.textContent = "";
-    info.classList.add("hide-me");
-    imgContainer.classList.add("hide-me");
-    playerWins.parentNode.classList.add("hide-me");
-    
-    paragraph = document.createElement("p");
-    playerCount === 5 ? paragraph.innerText = "You Win!" :
-                        paragraph.innerText = "You Lose!";
-    paragraph.appendChild(document.createElement("br"));
-    scoreboard = [playerWins.innerText, "-", compWins.innerText];
-    scoreboard.forEach(span => {
-        const elem = document.createElement("span");
-        elem.innerText = span;
-        paragraph.appendChild(elem);
-    }); 
-    button = document.createElement("button");
-    button.innerText = "Play again!";
-    reset.appendChild(paragraph);
-    reset.appendChild(button);
-    gameArea.appendChild(reset);
-    playerWins.innerText = "0";
-    compWins.innerText = "0";
-    return;
+    resetImage("player", player);
+    resetImage("comp", comp);
 }
 
+function getPlayerScore() {
+    player = document.querySelector(".game-area div.score span#player");
+    return +player.innerText;
+}
 
-playerChoices = document.querySelectorAll("#player img");
-playerChoices.forEach(choice => choice.addEventListener("click", gameClick));
+function getCompScore() {
+    comp = document.querySelector(".game-area div.score span#comp");
+    return +comp.innerText
+}
+
+function isGameOver(maxScore=5) {
+    return Math.max(getPlayerScore(), getCompScore()) === maxScore;
+}
+
+function refreshGame(maxScore=5) {
+    paragraph = document.createElement("p");
+    getPlayerScore() === maxScore ? 
+        paragraph.innerText = "You Win!" :
+        paragraph.innerText = "You Lose!";
+    paragraph.appendChild(document.createElement("br"));
+
+    scoreboard = document.querySelectorAll(".game-area div.score span");
+    scoreboard.forEach(span => {
+        const elem = document.createElement("span");
+        elem.innerText = span.innerText;
+        paragraph.appendChild(elem);
+    });
+    buttonLink = document.createElement("a");
+    buttonLink.href = "./";
+    button = document.createElement("button");
+    button.innerText = "Play again!";
+    buttonLink.appendChild(button);
+    reset.appendChild(paragraph);
+    reset.appendChild(buttonLink);
+
+    imgContainer.textContent = "";
+    gameInfo.textContent = "";
+    scoreArea.textContent = "";
+}
+
+function gameClick() {
+    player = this.id;
+    const maxScore = 5;
+    playRound(player);
+
+    if (isGameOver(maxScore)) {
+        refreshGame(maxScore);
+    }
+}
