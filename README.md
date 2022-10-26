@@ -1,5 +1,5 @@
 ### Rock Paper Scissors
-A simple game of rock-paper-scissors, prescribed by [the Odin Project](https://www.theodinproject.com>
+A simple game of rock-paper-scissors, prescribed by [TOP](https://www.theodinproject.com)
 
 ### CONTENT
 
